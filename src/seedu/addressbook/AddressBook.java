@@ -67,6 +67,7 @@ public class AddressBook {
      */
     private static final String MESSAGE_ADDED = "New person added: %1$s, Phone: %2$s, Email: %3$s";
     private static final String MESSAGE_ADDRESSBOOK_CLEARED = "Address book has been cleared!";
+    private static final String MESSAGE_ADDRESSBOOK_TOTAL = " Contact(s) found";
     private static final String MESSAGE_COMMAND_HELP = "%1$s: %2$s";
     private static final String MESSAGE_COMMAND_HELP_PARAMETERS = "\tParameters: %1$s";
     private static final String MESSAGE_COMMAND_HELP_EXAMPLE = "\tExample: %1$s";
@@ -120,6 +121,11 @@ public class AddressBook {
                                                     + "the last find/list call.";
     private static final String COMMAND_DELETE_PARAMETER = "INDEX";
     private static final String COMMAND_DELETE_EXAMPLE = COMMAND_DELETE_WORD + " 1";
+
+
+    private static final String COMMAND_TOTAL_WORD = "total";
+    private static final String COMMAND_TOTAL_DESC = "States the total number of contacts";
+    private static final String COMMAND_TOTAL_EXAMPLE = COMMAND_TOTAL_WORD;
 
     private static final String COMMAND_CLEAR_WORD = "clear";
     private static final String COMMAND_CLEAR_DESC = "Clears address book permanently.";
@@ -379,6 +385,8 @@ public class AddressBook {
             return executeDeletePerson(commandArgs);
         case COMMAND_CLEAR_WORD:
             return executeClearAddressBook();
+        case COMMAND_TOTAL_WORD:
+            return executeTotalContacts();
         case COMMAND_HELP_WORD:
             return getUsageInfoForAllCommands();
         case COMMAND_EXIT_WORD:
@@ -558,6 +566,12 @@ public class AddressBook {
         return String.format(MESSAGE_DELETE_PERSON_SUCCESS, getMessageForFormattedPersonData(deletedPerson));
     }
 
+    //function to get total
+    private static String executeTotalContacts(){
+        int numberOfContacts = getTotalContacts();
+        return numberOfContacts + "" + MESSAGE_ADDRESSBOOK_TOTAL;
+
+    }
     /**
      * Clears all persons in the address book.
      *
@@ -776,6 +790,11 @@ public class AddressBook {
      *        INTERNAL ADDRESS BOOK DATA METHODS
      * ================================================================================
      */
+
+    //gets total contacts
+    private static int getTotalContacts(){
+        return ALL_PERSONS.size();
+    }
 
     /**
      * Adds a person to the address book. Saves changes to storage file.
